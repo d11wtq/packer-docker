@@ -1,10 +1,10 @@
-# Docker container for building virtual machine images with Packer
-
-FROM       ubuntu
+FROM       progrium/busybox:latest
 MAINTAINER Chris Corbyn <chris@w3style.co.uk>
 
-ADD https://dl.bintray.com/mitchellh/packer/0.5.2_linux_amd64.zip \
-    /usr/local/bin/packer.zip
+ENV PACKER_ZIP packer_0.8.5_linux_amd64.zip
+ENV PACKER_URL http://dl.bintray.com/mitchellh/packer/$PACKER_ZIP
 
-RUN apt-get install -qq -y unzip
-RUN cd /usr/local/bin; unzip -q packer.zip; rm packer.zip
+RUN cd /tmp;                       \
+    wget $PACKER_URL;              \
+    unzip -d /usr/bin $PACKER_ZIP; \
+    rm $PACKER_ZIP
